@@ -1,5 +1,9 @@
 Demo Video :
+**Mock Account:
+username : DumaDs
+password : 123456**
 
+Download Authenticator (e.g microsoft authenticator) to scan QR and get OTP
 
 
 https://github.com/user-attachments/assets/e3788088-c5c6-46c3-8f15-37bad61ac575
