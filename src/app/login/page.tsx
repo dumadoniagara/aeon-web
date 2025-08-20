@@ -44,7 +44,7 @@ export default function LoginPage() {
       setSecureWord(data.secureWord);
       setExpiresAt(data.expiresAt);
       setStep("secureWord");
-    } catch (err: any) {
+    } catch (err) {
       alert(err.message);
     }
   };
@@ -69,7 +69,7 @@ export default function LoginPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Login failed");
       router.push(`/mfa?username=${encodeURIComponent(username)}`);
-    } catch (err: any) {
+    } catch (err) {
       alert(err.message);
     }
   };

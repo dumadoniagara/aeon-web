@@ -6,8 +6,6 @@ import speakeasy from "speakeasy";
 export async function POST(req: Request) {
   const { username, code } = await req.json();
 
-  console.log("username ==", username);
-
   const mfa = mfaStore[username];
   if (!mfa) {
     return NextResponse.json(
@@ -22,10 +20,6 @@ export async function POST(req: Request) {
       { status: 403 }
     );
   }
-  
-  console.log("username ==", username);
-console.log("secret ==", mfa.secret);
-console.log("input code ==", code);
 
   const verified = speakeasy.totp.verify({
     secret: mfa.secret, 

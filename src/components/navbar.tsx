@@ -3,10 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FiMenu, FiX, FiSearch } from "react-icons/fi";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const pathname = usePathname();
+
+  const hideOn = ["/dashboard"];
+
+  if (hideOn.includes(pathname)) {
+    return null;
+  }
 
   return (
     <nav className="bg-white shadow-md fixed w-full top-0 left-0 z-50">

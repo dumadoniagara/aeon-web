@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import AlertMessage from "@/components/alert-message";
 
 export default function MfaPage() {
   const searchParams = useSearchParams();
   const username = searchParams.get("username") ?? "";
+  const router = useRouter();
 
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [code, setCode] = useState("");
@@ -28,7 +30,7 @@ export default function MfaPage() {
 
         setQrCode(data.qrCode);
         fetchedRef.current = true; 
-      } catch (err: any) {
+      } catch (err) {
         setError(err.message);
         fetchedRef.current = true;
       }
@@ -53,19 +55,15 @@ export default function MfaPage() {
 
       setSuccess(true);
       localStorage.setItem("token", data.token);
-    } catch (err: any) {
+      router.push('/dashboard')
+    } catch (err) {
       setError(err.message);
     }
   };
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="bg-white p-6 rounded shadow w-full max-w-sm text-center">
-          <h1 className="text-2xl font-bold mb-4">🎉 Success!</h1>
-          <p>You are logged in with MFA ✅</p>
-        </div>
-      </div>
+      <AlertMessage message="Login Successful !" />
     );
   }
 
@@ -74,7 +72,6 @@ export default function MfaPage() {
       <div className="bg-white p-6 rounded shadow w-full max-w-sm">
         <h1 className="text-2xl font-bold text-center mb-6">MFA Setup & Verification</h1>
 
-        {/* Show QRCode for setup */}
         {qrCode && (
           <div className="text-center mb-4">
             <p className="text-sm text-gray-600 mb-2">
@@ -84,7 +81,6 @@ export default function MfaPage() {
           </div>
         )}
 
-        {/* Verification form */}
         <form onSubmit={handleVerify} className="space-y-4">
           <div>
             <label htmlFor="code" className="block text-sm mb-1">
